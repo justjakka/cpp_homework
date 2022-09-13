@@ -5,9 +5,17 @@ int main(){
     int a, b, c;
     scanf("%i %i %i", &a, &b, &c);
 
-    for (int i = a; i <= b; ++i){
-        if (!(i % c))
-            printf("%i ", i);
+    if (!(a % c)) {
+        for (int i = a / c; i * c <= b; ++i) {
+            printf("%i ", i * c);
+        }
+        printf("\n");
     }
-    printf("\n");
+    else {
+        for (int i = a / c + 1; i * c <= b; ++i) {
+            printf("%i ", i * c);
+        }
+        printf("\n");
+    }
+    
 }
