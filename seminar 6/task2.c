@@ -35,6 +35,8 @@ int main()
 		g[i].rating = sum / k;
 	}
 
+    double mid_ratings = 0;
+
     for (int j = 0; j < n; ++j)
     {
         for (int i = 0; i < n - 1 - j; i += 1)
@@ -46,10 +48,13 @@ int main()
                 g[i + 1] = temp;
             }
         }
+        mid_ratings += g[j].rating;
     }
 
     for (int i = 0; i < n; i++)
         printf("%s: %.3lf\n", g[i].name, g[i].rating);
+
+    printf("\nMedian rating: %.3lf\n", mid_ratings / n);
     
     free(g);
 }
