@@ -14,25 +14,25 @@ typedef struct game Game;
 int main()
 {
     int n;
-	scanf("%i", &n);
+    scanf("%i", &n);
 
-	Game* g = (Game*)malloc(n * sizeof(Game));
+    Game* g = (Game*)malloc(n * sizeof(Game));
 
-	for (int i = 0; i < n; ++i) {
-		scanf("%[^:]", g[i].name);
+    for (int i = 0; i < n; ++i) {
+        scanf("%[^:]", g[i].name);
 
-		int k;
-		scanf(":%i", &k);
+        int k;
+        scanf(":%i", &k);
 
-		double sum = 0;
+        double sum = 0;
 
-		for (int j = 0; j < k; ++j) {
-			int temp;
-			scanf("%i", &temp);
-			sum += temp;
+        for (int j = 0; j < k; ++j) {
+            int temp;
+            scanf("%i", &temp);
+            sum += temp;
 		}
 
-		g[i].rating = sum / k;
+        g[i].rating = sum / k;
 	}
 
     double mid_ratings = 0;
