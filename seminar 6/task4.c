@@ -193,7 +193,7 @@ void find_best_movie_argument(const MovieDatabase* pmd, Movie* p_best_movie)
     for (int i = 0; i < pmd->number_of_movies; i++) {
         if (best_rating < pmd->movies[i].rating) {
             best_rating = pmd->movies[i].rating;
-            best = &pmd->movies[i].rating;
+            best = &pmd->movies[i];
         }
     }
 
@@ -240,8 +240,6 @@ void best_actor(const MovieDatabase* pmd)
     for (int i = 0; i < 5000; i++)
         if (movies[i] != 0)
             ratings[i] /= movies[i];
-
-    free(movies);
 
     int best = 0;
     int index;
@@ -304,8 +302,10 @@ int main()
 
     print_movie(stdout, find_best_movie_pointer(&md));
 
-    char name[32] = "Abel";
-    char surname[32] = "Garifullin";
+    char name[32] = "Ruslana";
+    char surname[32] = "Yegorova";
 
     best_actor(&md);
+    actor_filmography(&md, name, surname);
+    movies_of_the_year(&md, 2007);
 }
