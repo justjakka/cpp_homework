@@ -19,4 +19,5 @@ int main()
     float* threes = get_geometric_progression(1.0, 3.0, 10);
     for (int i = 0; i < 10; i++)
         printf("%.f\n", threes[i]);
+    free(threes);
 }
