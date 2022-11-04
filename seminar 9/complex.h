@@ -189,8 +189,7 @@ Complex operator/(float a, const Complex& b)
 
 std::ostream& operator<<(std::ostream& out, const Complex& a) 
 {
-    if (a.re != 0)
-        out << a.re;
+    out << a.re;
 
     if (a.im > 0)
     {
