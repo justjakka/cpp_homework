@@ -72,16 +72,16 @@ public:
 
     Number()
     {
-        capacity = 0;
+        capacity = 1;
         data = new char[capacity];
         data[0] = 0;
         size = capacity;
     }
 
     Number(const Number& n)
-    {
+    {   
         capacity = n.capacity;
-        data = n.data;
+        data = new char[capacity];
         for (int i = 0; i < capacity; ++i) 
         {
             data[i] = n.data[i];
@@ -94,34 +94,171 @@ public:
     {
         capacity = 0;
         int str_len = 0;
-        while (str[str_len] != (char)"\0") 
+        while (str[str_len] != '\0')
         {   
             capacity++;
             str_len++;
         }
 
-        if (capacity % 2)
+        if (str_len % 2 == 0)
+        {
             capacity = capacity / 2;
-        else
-            capacity = capacity / 2 + 1;
+            data = new char[capacity];
+            str_len--;
 
-        data = new char[capacity];
-
-        for (int i = 0; i < capacity; ++i) 
-        {   
-            if (2 * (i + 1) > str_len)
-                {
-                    data[capacity - i] = str[2 * i];
-                    break;
-                }
-            else
+            for (int i = 0; i < capacity; ++i)
             {
-                char temp = 10 * str[2 * i];
-                temp += str[2 * i + 1];
-                data[capacity - i] = temp;
-            } 
+                int temp = 10 * (str[str_len - 1 - 2 * i] - '0');
+                temp += str[str_len - 2 * i] - '0';
+                data[i] = temp;
+            }
+        }
+            
+        else
+        {
+            capacity = capacity / 2 + 1;
+            data = new char[capacity];
+            data[capacity - 1] = str[0] - '0';
+
+            str_len--;
+
+            for (int i = 0; i < capacity - 1; ++i)
+            {
+                int temp = 10 * (str[str_len - 1 - 2 * i] - '0');
+                temp += str[str_len - 2 * i] - '0';
+                data[i] = temp;
+            }
         }
 
+        size = capacity;
+
+    }
+    
+    Number& operator=(const Number& right)
+    {
+        capacity = right.capacity;
+        data = right.data;
+        size = right.size;
+        return *this;
+    }
+
+    Number& operator+(const Number& right)
+    {   
+        std::size_t new_capacity;
+        bool bigger = false;
+
+        if (capacity < right.capacity)
+            bigger = true;
+
+        int temp = 0;
+        if (bigger)
+        {
+            for (int i = 0; i < right.capacity; ++i)
+            {
+                if (i >= capacity)
+                {
+                    temp += right.data[i];
+                    temp /= base;
+                }
+                else
+                {
+                    temp += right.data[i];
+                    temp += data[i];
+                    temp /= base;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < capacity; ++i)
+            {
+                if (i >= capacity)
+                {
+                    temp += data[i];
+                    temp /= base;
+                }
+                else
+                {
+                    temp += right.data[i];
+                    temp += data[i];
+                    temp /= base;
+                }
+            }
+        }
+
+        if (bigger)
+            new_capacity = right.capacity;
+        else
+            new_capacity = capacity;
+
+        bool new_digit = false;
+
+        if (temp > 0)
+        {
+            new_capacity++;
+            new_digit = true;
+        }
+            
+
+        char* new_data = new char[new_capacity];
+
+        temp = 0;
+
+        if (bigger)
+        {
+            for (int i = 0; i < right.capacity; ++i)
+            {
+                if (i >= capacity)
+                {
+                    temp += right.data[i];
+                    new_data[i] = temp % base;
+                    temp /= base;
+                }
+                else
+                {
+                    temp += right.data[i];
+                    temp += data[i];
+                    new_data[i] = temp % base;
+                    temp /= base;
+                }
+            }
+        }
+
+        else
+        {
+            for (int i = 0; i < capacity; ++i)
+            {
+                if (i >= capacity)
+                {
+                    temp += data[i];
+                    new_data[i] = temp % base;
+                    temp /= base;
+                }
+                else
+                {
+                    temp += right.data[i];
+                    temp += data[i];
+                    new_data[i] = temp % base;
+                    temp /= base;
+                }
+            }
+        }
+
+        if (new_digit)
+            new_data[new_capacity - 1] = temp;
+        
+        delete [] data;
+        data = new_data;
+        capacity = new_capacity;
+        size = capacity;
+
+        return *this;
+    }
+
+    Number& operator+=(const Number& right)
+    {
+        *this = *this + right;
+        return *this;
     }
 
     ~Number() 
@@ -154,5 +291,24 @@ int main()
 {
     Number x = 12345;
     Number y = 0;
-    std::cout << x << " " << y << std::endl;
+    Number a = Number("12345678");
+    Number b = Number("1234560");
+    Number zero;
+    Number cpy = x;
+    Number test1 = 9000000;
+    test1 = test1 + b;
+    Number test2 = 9000000;
+    test2 += b;
+    std::cout << x << " " << y << " " << a << " " << b << " " << zero << " " << cpy << " " << test1 << " " << test2 << std::endl;
+
+    Number f1 = 1;
+    Number f2 = 1;
+    Number temp = f2;
+    for (int i = 0; i < 3; ++i)
+    {   
+        temp += f1;  
+        f2 += f1;
+        std::cout << f1 << " " << f2 << std::endl;
+        f1 = temp;
+    }
 }
