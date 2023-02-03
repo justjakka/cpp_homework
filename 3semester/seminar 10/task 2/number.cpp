@@ -137,8 +137,18 @@ public:
     Number& operator=(const Number& right)
     {
         capacity = right.capacity;
-        data = right.data;
+        
+        char* new_data = new char[capacity];
+
+        for (int i = 0; i < right.capacity; ++i) 
+        {
+            new_data[i] = right.data[i];
+        }
+
         size = right.size;
+
+        delete [] data;
+        data = new_data;
         return *this;
     }
 
@@ -304,11 +314,12 @@ int main()
     Number f1 = 1;
     Number f2 = 1;
     Number temp = f2;
-    for (int i = 0; i < 3; ++i)
+
+    for (int i = 0; i < 11; ++i)
     {   
-        temp += f1;  
         f2 += f1;
-        std::cout << f1 << " " << f2 << std::endl;
         f1 = temp;
+        temp = f2;
+        std::cout << f1 << " " << f2 << std::endl;
     }
 }
