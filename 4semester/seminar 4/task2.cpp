@@ -28,6 +28,24 @@ void lastDigits3(vector<int>* v)
     return;
 }
 
+/*
+void lastDigits4(span<int> sp)
+{
+    return;
+}
+
+results in an error, see traceback below:
+
+task2.cpp:31:6: error: variable or field ‘lastDigits4’ declared void
+   31 | void lastDigits4(span<int> sp)
+      |      ^~~~~~~~~~~
+task2.cpp:31:18: error: ‘span’ was not declared in this scope
+   31 | void lastDigits4(span<int> sp)
+      |                  ^~~~
+task2.cpp:31:23: error: expected primary-expression before ‘int’
+   31 | void lastDigits4(span<int> sp)
+
+*/
 
 int main()
 {
