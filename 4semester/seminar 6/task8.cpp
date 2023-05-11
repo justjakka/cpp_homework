@@ -5,10 +5,11 @@
 
 using namespace std;
 
-template <class iterator, typename T = typename iterator::value_type> iterator bestNeighbours(iterator const& con_begin, iterator const& con_end, T (*func)(T, T))
+template <class iterator, typename T = typename iterator::value_type> 
+iterator bestNeighbours(iterator const& con_begin, iterator const& con_end, T (*func)(T, T))
 {
     iterator result;
-    iterator end;
+    iterator end = con_begin;
     T max = -numeric_limits<T>::infinity();
     advance(end, distance(con_begin, con_end) - 1);
     for (auto i = con_begin; i != end; advance(i, 1))
